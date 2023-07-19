@@ -2,19 +2,19 @@
   {
     "id": "ynbdkk3ickv9fntn7ryow8r7",
     "title": "Pay bills",
-    "completed": false,
+    "completed": "false",
     "createdAt": "2023-07-18T13:48:02.286Z"
   },
   {
     "id": "gqp61ghea7vk1ewr463n7isw",
     "title": "Do laundry",
-    "completed": false,
+    "completed": "false",
     "createdAt": "2023-07-18T13:48:02.288Z"
   },
   {
     "id": "npty8e05lv5dcs6ol1jp2xpe",
     "title": "yada yada",
-    "completed": true,
+    "completed": "false",
     "createdAt": "2023-07-19T17:17:27.652Z"
   },
   {
