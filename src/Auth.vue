@@ -1,5 +1,3 @@
-// src/Auth.vue
-
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
 import { remult } from "remult"
