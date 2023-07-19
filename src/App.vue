@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { remult } from "remult";
 import { Task } from "./shared/Task";
 
@@ -9,7 +9,7 @@ const newTaskTitle = ref("")
 async function addTask() {
   try {
     const newTask = await taskRepo.insert({ title: newTaskTitle.value })
-    tasks.value.push(newTask)
+    //tasks.value.push(newTask) <-- this line is no longer needed
     newTaskTitle.value = ""
   } catch (error: any) {
     alert(error.message)
@@ -27,20 +27,29 @@ async function saveTask(task: Task) {
 async function deleteTask(task: Task) {
   try {
     await taskRepo.delete(task)
-    tasks.value = tasks.value.filter(t => task !== t)
+    // tasks.value = tasks.value.filter(t => task !== t)
   } catch (error: any) {
     alert(error.message)
   }
 }
 
 onMounted(() =>
-  taskRepo
-    .find({
-      limit: 20,
-      orderBy: { createdAt: "asc" }
-      //where: { completed: true }
-    })
-    .then(items => (tasks.value = items))
+  // taskRepo
+  //   .find({
+  //     limit: 20,
+  //     orderBy: { createdAt: "asc" }
+  //     //where: { completed: true }
+  //   })
+  //   .then(items => (tasks.value = items))
+    onUnmounted(
+    taskRepo
+      .liveQuery({
+        limit: 20,
+        orderBy: { createdAt: "asc" }
+        //where: { completed: true },
+      })
+      .subscribe(info => (tasks.value = info.applyChanges(tasks.value)))
+  )
 )
 </script>
 <template>
