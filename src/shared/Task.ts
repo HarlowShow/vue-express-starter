@@ -1,22 +1,20 @@
-import { Entity, Fields, Validators } from "remult"
+import { Entity, Fields, Validators, Allow } from "remult"
 
 @Entity("tasks", {
-  allowApiCrud: true
+    allowApiCrud: Allow.authenticated,
+    allowApiInsert: "admin",
+    allowApiDelete: "admin"
 })
 export class Task {
-  @Fields.cuid()
-  id = ""
-
-  @Fields.string({
-    validate: Validators.required
-  })
-  title = ""
-
-  @Fields.string<Task>({
-    validate: (task) => {
-      if (task.title.length < 3) throw "Too Short"
-    }
-  })
+    @Fields.uuid()
+    id!: string
+  
+    @Fields.string({
+      validate: (task) => {
+        if (task.title.length < 3) throw "Too Short"
+      }
+    })
+    title = ""
 
   @Fields.boolean()
   completed = false
